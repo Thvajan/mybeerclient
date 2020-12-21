@@ -2,6 +2,8 @@ package me.learning.mybeerclient;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,19 @@ public class BreweryClientTest {
 	void getBeerById() {
 		BeerDTO beerDTO = breweryClient.getBeerById(UUID.randomUUID());
 		assertNotNull(beerDTO);
+	}
+
+	@Test
+	void saveBeer() {
+		BeerDTO beerDTO = BeerDTO.builder().beerName("TestBeer").build();
+		URI uri = breweryClient.saveBeer(beerDTO);
+		assertNotNull(uri);
+		try {
+			System.out.println(uri.toURL().toString());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

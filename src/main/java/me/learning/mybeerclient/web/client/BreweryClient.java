@@ -1,5 +1,6 @@
 package me.learning.mybeerclient.web.client;
 
+import java.net.URI;
 import java.util.UUID;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,11 +24,15 @@ public class BreweryClient {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 
+	public void setApiHost(String apiHost) {
+		this.apiHost = apiHost;
+	}
+
 	public BeerDTO getBeerById(UUID uuid) {
 		return restTemplate.getForObject(apiHost + BEER_PATH_V1 + uuid.toString(), BeerDTO.class);
 	}
 
-	public void setApiHost(String apiHost) {
-		this.apiHost = apiHost;
+	public URI saveBeer(BeerDTO beerDTO) {
+		return restTemplate.postForLocation(apiHost + "/api/v1/beer", beerDTO);
 	}
 }
